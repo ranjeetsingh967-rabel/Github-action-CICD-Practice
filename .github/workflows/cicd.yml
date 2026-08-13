@@ -16,6 +16,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check Azure Secrets
+        shell: powershell
+        env:
+          CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          TENANT_ID: ${{ secrets.ARM_TENNANT_ID }}
+          SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:CLIENT_ID)) {
+            Write-Error "ARM_CLIENT_ID is EMPTY or NOT FOUND"
+          } else {
+            Write-Host "ARM_CLIENT_ID is available"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:TENANT_ID)) {
+            Write-Error "ARM_TENNANT_ID is EMPTY or NOT FOUND"
+          } else {
+            Write-Host "ARM_TENNANT_ID is available"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:SUBSCRIPTION_ID)) {
+            Write-Error "ARM_SUBSCRIPTION_ID is EMPTY or NOT FOUND"
+          } else {
+            Write-Host "ARM_SUBSCRIPTION_ID is available"
+          }
+
       - name: Azure Login
         uses: azure/login@v3
         with:
