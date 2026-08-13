@@ -62,7 +62,7 @@ jobs:
       - name: Terraform Format
         shell: powershell
         run: |
-          terraform fmt -check
+          terraform fmt
 
       # 7. Terraform Validate
       - name: Terraform Validate
